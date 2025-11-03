@@ -1,0 +1,136 @@
+<div class="container">
+  <h2>Trip Management</h2>
+
+  <!-- Button to show trips longer than 8 hours -->
+  <button (click)="toggleLongTrips()" class="filter-btn">
+    {{ showLongTripsOnly ? 'Show All Trips' : 'Show Trips > 8 Hours' }}
+  </button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Driver</th>
+        <th>Vehicle</th>
+        <th>Source</th>
+        <th>Destination</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+        <th>Status Action</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let trip of getFilteredTrips()">
+        <td>{{ trip.tripID }}</td>
+        <td>{{ trip.assignedDriver?.driverName || trip.assignedDriverId }}</td>
+        <td>{{ trip.assignedVehicle?.vehicleType || trip.assignedVehicleId }}</td>
+        <td>{{ trip.source }}</td>
+        <td>{{ trip.destination }}</td>
+        <td>{{ trip.startTime | date:'short' }}</td>
+        <td>{{ trip.endTime | date:'short' }}</td>
+        <td>
+          <span *ngIf="trip.status === tripStatusEnum.Completed" class="completed">✅ Completed</span>
+          <span *ngIf="trip.status !== tripStatusEnum.Completed">{{ trip.status }}</span>
+        </td>
+        <td>
+          <button *ngIf="trip.status !== tripStatusEnum.Completed" class="mark-btn" (click)="markTripCompleted(trip)">
+            Mark Completed
+          </button>
+          <span *ngIf="trip.status === tripStatusEnum.Completed" class="done">✔️ Done</span>
+        </td>
+        <td>
+          <button class="edit-btn" (click)="editTrip(trip)">Edit</button>
+          <button class="delete-btn" (click)="deleteTrip(trip.tripID)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="trips.length === 0">No trips found.</p>
+
+  <button class="add-btn" (click)="toggleAddForm()">➕ Add Trip</button>
+
+  <!-- Add Trip Form -->
+  <div class="forms-container">
+    <div *ngIf="showAddForm" class="trip-form">
+      <h3>Add New Trip</h3>
+      <form #tripForm="ngForm" (ngSubmit)="addTrip(tripForm)">
+        <div class="form-group">
+          <label>Source:</label>
+          <input type="text" [(ngModel)]="newTrip.source" name="source" required />
+        </div>
+
+        <div class="form-group">
+          <label>Destination:</label>
+          <input type="text" [(ngModel)]="newTrip.destination" name="destination" required  />
+        </div>
+
+        <div class="form-group">
+          <label>Start Time:</label>
+          <input type="datetime-local" [(ngModel)]="newTrip.startTime" step="60" name="startTime"  />
+        </div>
+
+        <div class="form-group">
+          <label>End Time:</label>
+          <input type="datetime-local" [(ngModel)]="newTrip.endTime" step="60" name="endTime" />
+        </div>
+
+        <div class="form-group">
+          <label>Status:</label>
+          <select [(ngModel)]="newTrip.status" name="status" required>
+            <option [value]="tripStatusEnum.InUse">InUse</option>
+            <option [value]="tripStatusEnum.Completed">Completed</option>
+            <option [value]="tripStatusEnum.Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit">Save</button>
+          <button type="button" (click)="toggleAddForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Edit Trip Form -->
+    <div *ngIf="editingTrip" class="edit-form">
+      <h3>Edit Trip</h3>
+      <form #editForm="ngForm" (ngSubmit)="updateTrip(editForm)">
+        <div class="form-group">
+          <label>Source:</label>
+          <input type="text" [(ngModel)]="editingTrip.source" name="editSource" required />
+        </div>
+
+        <div class="form-group">
+          <label>Destination:</label>
+          <input type="text" [(ngModel)]="editingTrip.destination" name="editDestination" required />
+        </div>
+
+        <div class="form-group">
+          <label>Start Time:</label>
+          <input type="datetime-local" [(ngModel)]="editingTrip.startTime" name="editStart" required />
+        </div>
+
+        <div class="form-group">
+          <label>End Time:</label>
+          <input type="datetime-local" [(ngModel)]="editingTrip.endTime" name="editEnd" required />
+        </div>
+
+        <div class="form-group">
+          <label>Status:</label>
+          <select [(ngModel)]="editingTrip.status" name="editStatus" required>
+            <option [value]="tripStatusEnum.InUse">InUse</option>
+            <option [value]="tripStatusEnum.Completed">Completed</option>
+            <option [value]="tripStatusEnum.Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit">Update</button>
+          <button type="button" (click)="editingTrip = undefined">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

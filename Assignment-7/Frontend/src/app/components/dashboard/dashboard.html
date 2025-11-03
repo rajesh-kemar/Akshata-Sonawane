@@ -1,0 +1,31 @@
+<!-- dashboard.component.html -->
+
+<div class="dashboard-container">
+  <h2>Dashboard</h2>
+
+  <div class="cards">
+    <!-- Active Trips -->
+    <div class="card active" (click)="navigateTo('trip')">
+      <h3>Active Trips</h3>
+      <p>{{ activeTrips }}</p>
+    </div>
+
+    <!-- Completed Trips -->
+    <div class="card completed" (click)="navigateTo('trip')">
+      <h3>Completed Trips</h3>
+      <p>{{ completedTrips }}</p>
+    </div>
+
+    <!-- Available Drivers -->
+    <div class="card drivers" (click)="navigateTo('driver')">
+      <h3>Available Drivers</h3>
+      <p>{{ availableDrivers }}</p>
+    </div>
+
+    <!-- Available Vehicles -->
+    <div class="card vehicles" (click)="navigateTo('vehicle')">
+      <h3>Available Vehicles</h3>
+      <p>{{ availableVehicles }}</p>
+    </div>
+  </div>
+</div>

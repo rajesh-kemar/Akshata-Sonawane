@@ -1,0 +1,63 @@
+/* === Navbar Styles === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #9fd1ca, #0d7969); /* gradient for modern look */
+  color: white;
+  padding: 20px 30px; /* bigger padding for elegance */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border-radius: 0 0 15px 15px; /* rounded bottom corners */
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Logo Styling */
+.navbar-logo {
+  font-size: 24px; /* increased font size */
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #2c2b2a; /* accent color */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Navigation Links */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 25px; /* more spacing */
+  margin: 0;
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px; /* bigger and readable */
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.navbar-links a:hover {
+  background-color: #ffeb3b;
+  color: #1976d2;
+  transform: scale(1.1); /* slight scale on hover for interactivity */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.active {
+  border-bottom: 3px solid #ffeb3b;
+  font-weight: 700;
+}
+
+/* === Page Layout === */
+.content {
+  padding: 25px;
+  background-color: #f0f4f8; /* soft background */
+  min-height: calc(100vh - 80px);
+  transition: background 0.3s;
+}

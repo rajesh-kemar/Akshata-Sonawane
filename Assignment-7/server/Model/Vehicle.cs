@@ -1,0 +1,19 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace Dashboard_TripMangement.Model
+{
+    public class Vehicle
+    {
+        public int VehicleID { get; set; }
+        [Required]
+        public string VehicleType { get; set; }
+        public decimal Capacity { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public TripStatus Status { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Trips> Trips { get; set; } = new List<Trips>();
+    }
+}
