@@ -1,0 +1,62 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;        /* Stack heading + cards vertically */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 2rem;
+  background-color: #f9f9f9;
+}
+
+/* Make all cards sit in one horizontal row */
+.cards {
+  display: flex;
+  flex-direction: row;           /* Ensure horizontal layout */
+  justify-content: center;       /* Center horizontally */
+  align-items: stretch;          /* Same height */
+  gap: 2rem;                     /* Space between cards */
+  flex-wrap: nowrap;             /* ❗ Prevent wrapping to next line */
+              /* Allow horizontal scroll if too many cards */
+  padding: 1rem;
+  width: 100%;
+  max-width: 1200px;             /* Optional: control total width */
+}
+
+/* Individual card style */
+.card {
+  flex: 0 0 220px;               /* Fixed width per card, no shrinking */
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 200px;              /* Ensures consistent size */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.card p {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Card color variants */
+.card.active { background-color: #ffe082; }
+.card.completed { background-color: #81c784; color: #fff; }
+.card.drivers { background-color: #64b5f6; color: #fff; }
+.card.vehicles { background-color: #ba68c8; color: #fff; }
+.card.total-hours { background-color: #ff8a65; color: #fff; }
+
+.error {
+  color: red;
+  margin-top: 2rem;
+}

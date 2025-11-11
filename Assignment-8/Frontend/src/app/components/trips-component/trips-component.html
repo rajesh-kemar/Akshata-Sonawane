@@ -1,0 +1,158 @@
+<div class="container">
+  <h2>Trip Management</h2>
+
+  <!-- Button to show trips longer than 8 hours -->
+  <button (click)="toggleLongTrips()" class="filter-btn">
+    {{ showLongTripsOnly ? 'Show All Trips' : 'Show Trips > 8 Hours' }}
+  </button>
+
+  <!-- Trip Table -->
+  <p *ngIf="trips.length === 0">No trips found.</p>
+
+  <!-- Add Trip Button (only for dispatchers) -->
+  <button *ngIf="!isDriver" class="add-btn" (click)="toggleAddForm()">➕ Add Trip</button>
+
+  <!-- Popup Overlay for Add/Edit Trip -->
+  <div *ngIf="(showAddForm && !isDriver) || editingTrip" class="trip-popup-overlay">
+    <div class="trip-popup">
+      <!-- Close Button -->
+      <button class="close-btn" (click)="showAddForm ? toggleAddForm() : (editingTrip = undefined)">
+        &times;
+      </button>
+
+      <!-- ✅ Add Trip Form (Dispatchers only) -->
+      <form *ngIf="showAddForm && !isDriver" #tripForm="ngForm" (ngSubmit)="addTrip(tripForm)" class="trip-form">
+        <h3>Add New Trip</h3>
+
+        <div class="form-group">
+          <label>Source:</label>
+          <input type="text" name="source" [(ngModel)]="newTrip.source" required placeholder="Enter source" #source="ngModel" />
+          <small *ngIf="source.invalid && source.touched" class="error-text" style="color:red">
+            Source is required.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>Destination:</label>
+          <input type="text" name="destination" [(ngModel)]="newTrip.destination" required placeholder="Enter destination" #destination="ngModel" />
+          <small *ngIf="destination.invalid && destination.touched" class="error-text" style="color:red">
+            Destination is required.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>Start Time:</label>
+          <input type="datetime-local" name="startTime" [(ngModel)]="newTrip.startTime" />
+        </div>
+
+        <div class="form-group">
+          <label>End Time:</label>
+          <input type="datetime-local" name="endTime" [(ngModel)]="newTrip.endTime" />
+        </div>
+
+        <div class="form-group">
+          <label>Status:</label>
+          <select [(ngModel)]="newTrip.status" name="status">
+            <option [value]="tripStatusEnum.InUse">InUse</option>
+            <option [value]="tripStatusEnum.Completed">Completed</option>
+            <option [value]="tripStatusEnum.Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" [disabled]="!tripForm.valid">Save</button>
+          <button type="button" class="cancel-btn" (click)="toggleAddForm()">Cancel</button>
+        </div>
+      </form>
+
+      <!-- ✅ Edit Trip Form (Dispatchers only) -->
+      <form *ngIf="editingTrip && !isDriver" #editForm="ngForm" (ngSubmit)="updateTrip(editForm)" class="trip-form">
+        <h3>Edit Trip</h3>
+
+        <div class="form-group">
+          <label>Source:</label>
+          <input type="text" [(ngModel)]="editingTrip.source" name="editSource" required #editSource="ngModel" />
+          <small *ngIf="editSource.invalid && editSource.touched" class="error-text" style="color:red">
+            Source is required.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>Destination:</label>
+          <input type="text" [(ngModel)]="editingTrip.destination" name="editDestination" required #editDestination="ngModel" />
+          <small *ngIf="editDestination.invalid && editDestination.touched" class="error-text" style="color:red">
+            Destination is required.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>Start Time:</label>
+          <input type="datetime-local" [(ngModel)]="editingTrip.startTime" name="editStart" />
+        </div>
+
+        <div class="form-group">
+          <label>End Time:</label>
+          <input type="datetime-local" [(ngModel)]="editingTrip.endTime" name="editEnd" />
+        </div>
+
+        <div class="form-group">
+          <label>Status:</label>
+          <select [(ngModel)]="editingTrip.status" name="editStatus">
+            <option [value]="tripStatusEnum.InUse">InUse</option>
+            <option [value]="tripStatusEnum.Completed">Completed</option>
+            <option [value]="tripStatusEnum.Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" [disabled]="!editForm.valid">Update</button>
+          <button type="button" class="cancel-btn" (click)="editingTrip = undefined">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Trip Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Driver</th>
+        <th>Vehicle</th>
+        <th>Source</th>
+        <th>Destination</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Status</th>
+        <th>Status Action</th>
+        <th *ngIf="!isDriver">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let trip of getFilteredTrips()">
+        <td>{{ trip.tripID }}</td>
+        <td>{{ trip.assignedDriver?.driverName || trip.assignedDriverId }}</td>
+        <td>{{ trip.assignedVehicle?.vehicleType || trip.assignedVehicleId }}</td>
+        <td>{{ trip.source }}</td>
+        <td>{{ trip.destination }}</td>
+        <td>{{ trip.startTime | date: 'short' }}</td>
+        <td>{{ trip.endTime | date: 'short' }}</td>
+        <td>
+          <span *ngIf="trip.status === tripStatusEnum.Completed" class="completed">✅ Completed</span>
+          <span *ngIf="trip.status !== tripStatusEnum.Completed">{{ trip.status }}</span>
+        </td>
+        <td>
+          <!-- Mark Completed is allowed for both drivers and dispatchers -->
+          <button *ngIf="trip.status !== tripStatusEnum.Completed" class="mark-btn" (click)="markTripCompleted(trip)">
+            Mark Completed
+          </button>
+          <span *ngIf="trip.status === tripStatusEnum.Completed" class="done">✔️ Done</span>
+        </td>
+        <td *ngIf="!isDriver">
+          <button class="edit-btn" (click)="editTrip(trip)">Edit</button>
+          <button class="delete-btn" (click)="deleteTrip(trip.tripID)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

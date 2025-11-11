@@ -1,0 +1,64 @@
+/* === Navbar Styles === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2c3e50; /* main navbar color */
+  color: white;
+  padding: 20px 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border-radius: 0 0 15px 15px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Logo Styling */
+.navbar-logo {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Navigation Links */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect with subtle matching color */
+.navbar-links a:hover {
+  background-color: #3a4f68; /* lighter shade of navbar for hover */
+  color: #ffffff; /* keep text white */
+  transform: scale(1.05); /* slight scale on hover */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.active {
+  border-bottom: 3px solid #ffeb3b; /* accent for active link */
+  font-weight: 700;
+}
+
+/* === Page Layout === */
+.content {
+  padding: 25px;
+  background-color: #f0f4f8;
+  min-height: calc(100vh - 80px);
+  transition: background 0.3s;
+}

@@ -1,0 +1,20 @@
+<div class="trip-summary-container" *ngIf="driverSummary; else errorTemplate">
+  <h2>My Trip Summary</h2>
+
+  <div class="summary-card">
+    <h3>{{ driverSummary.driverName }}</h3>
+    <div class="summary-item">
+      <span class="label">Total Trips:</span>
+      <span class="value">{{ driverSummary.totalTrips }}</span>
+    </div>
+    <div class="summary-item">
+      <span class="label">Total Hours:</span>
+      <span class="value">{{ driverSummary.totalHours | number:'1.0-2' }} hrs</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #errorTemplate>
+  <p class="error">{{ errorMessage || 'No summary data available.' }}</p>
+</ng-template>
+

@@ -1,0 +1,15 @@
+
+<div class="register-container">
+  <h2>Register Driver</h2>
+  <form (ngSubmit)="register()">  
+    <input type="text" [(ngModel)]="user.userName" name="userName" placeholder="Driver Name" required />
+    <input type="password" [(ngModel)]="user.password" name="password" placeholder="Password / License Number" required />
+    <input type="number" [(ngModel)]="user.phoneNumber" name="phoneNumber" placeholder="Phone Number" />
+    <input type="number" [(ngModel)]="user.experienceYear" name="experienceYear" placeholder="Experience (years)" />
+    <button type="submit">Register</button>
+  </form>
+<button class="login-btn" (click)="router.navigate(['/login'])">
+    Already registered? Login
+  </button>
+
+</div>

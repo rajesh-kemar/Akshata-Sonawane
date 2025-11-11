@@ -1,0 +1,27 @@
+
+<nav class="navbar">
+  <div class="navbar-logo">Logistic Trip Management</div>
+  <ul class="navbar-links">
+    <!-- Guest links -->
+    <li *ngIf="!isLoggedIn"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+    <li *ngIf="!isLoggedIn"><a routerLink="/register" routerLinkActive="active">Register</a></li>
+
+    <!-- Logout link -->
+    <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
+
+    <!-- Dispatcher links -->
+    <li *ngIf="isLoggedIn && role === 'Dispatcher'"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+    <li *ngIf="isLoggedIn && role === 'Dispatcher'"><a routerLink="/trip" routerLinkActive="active">Trips</a></li>
+    <li *ngIf="isLoggedIn && role === 'Dispatcher'"><a routerLink="/vehicle" routerLinkActive="active">Vehicles</a></li>
+    <li *ngIf="isLoggedIn && role === 'Dispatcher'"><a routerLink="/driver" routerLinkActive="active">Drivers</a></li>
+
+    <!-- Driver links -->
+    <li *ngIf="isLoggedIn && role === 'Driver'"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+    <li *ngIf="isLoggedIn && role === 'Driver'"><a routerLink="/trip-summary" routerLinkActive="active">Trip Summary</a></li>
+    <li *ngIf="isLoggedIn && role === 'Driver'"><a routerLink="/trip" routerLinkActive="active">Trips</a></li>
+  </ul>
+</nav>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

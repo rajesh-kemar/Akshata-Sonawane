@@ -1,0 +1,126 @@
+<div class="container">
+    <h2>Vehicle Management</h2>
+
+    <p *ngIf="vehicles.length === 0">No vehicles found in the database.</p>
+
+    <button class="add-btn" (click)="toggleAddForm()">➕ Add Vehicle</button>
+
+    <!-- Popup Overlay -->
+    <div *ngIf="showAddForm || editingVehicle" class="popup-overlay">
+        <div class="vehicle-form popup-form">
+            <button class="close-btn" (click)="showAddForm ? toggleAddForm() : cancelEdit()">&times;</button>
+
+            <!-- Add Vehicle Form -->
+            <form *ngIf="showAddForm" #addForm="ngForm" (ngSubmit)="addVehicle(addForm)">
+                <h3>Add New Vehicle</h3>
+
+                <div class="form-group">
+                    <label>Vehicle Type:</label>
+                    <input type="text" placeholder="Vehicle Type" [(ngModel)]="newVehicle.vehicleType"
+                        name="vehicleType" #type="ngModel" required />
+                    <div class="error" *ngIf="type.invalid && type.touched">Please enter vehicle type.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Capacity:</label>
+                    <input type="number" placeholder="Capacity" [(ngModel)]="newVehicle.capacity" name="capacity"
+                        #capacity="ngModel" required min="1" />
+                    <div class="error" *ngIf="capacity.invalid && capacity.touched">Please enter a valid capacity.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Number Plate:</label>
+                    <input type="text" placeholder="Number Plate" [(ngModel)]="newVehicle.numberPlate"
+                        name="numberPlate" #plate="ngModel" required />
+                    <div class="error" *ngIf="plate.invalid && plate.touched">Please enter the number plate.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select [(ngModel)]="newVehicle.status" name="status" #status="ngModel" required>
+                        <option value="">-- Select Status --</option>
+                        <option value="Available">Available</option>
+                        <option value="Unavailable">Unavailable</option>
+                    </select>
+                    <div class="error" *ngIf="status.invalid && status.touched">Please select a status.</div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" [disabled]="!addForm.valid">Save</button>
+                    <button type="button" class="cancel-btn" (click)="toggleAddForm()">Cancel</button>
+                </div>
+            </form>
+
+            <!-- Edit Vehicle Form -->
+            <form *ngIf="editingVehicle" #editForm="ngForm" (ngSubmit)="updateVehicle(editForm)">
+                <h3>Edit Vehicle</h3>
+
+                <div class="form-group">
+                    <label>Vehicle Type:</label>
+                    <input type="text" [(ngModel)]="editingVehicle.vehicleType" name="editVehicleType"
+                        #editType="ngModel" required />
+                    <div class="error" *ngIf="editType.invalid && editType.touched">Please enter vehicle type.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Capacity:</label>
+                    <input type="number" [(ngModel)]="editingVehicle.capacity" name="editCapacity"
+                        #editCapacity="ngModel" required min="1" />
+                    <div class="error" *ngIf="editCapacity.invalid && editCapacity.touched">Please enter a valid
+                        capacity.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Number Plate:</label>
+                    <input type="text" [(ngModel)]="editingVehicle.numberPlate" name="editNumberPlate"
+                        #editPlate="ngModel" required />
+                    <div class="error" *ngIf="editPlate.invalid && editPlate.touched">Please enter the number plate.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select [(ngModel)]="editingVehicle.status" name="editStatus" #editStatus="ngModel" required>
+                        <option value="">-- Select Status --</option>
+                        <option value="Available">Available</option>
+                        <option value="Unavailable">Unavailable</option>
+                    </select>
+                    <div class="error" *ngIf="editStatus.invalid && editStatus.touched">Please select a status.</div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" [disabled]="!editForm.valid">Update</button>
+                    <button type="button" class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Vehicle Table -->
+    <table *ngIf="vehicles.length > 0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Capacity</th>
+                <th>Number Plate</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let vehicle of vehicles">
+                <td>{{ vehicle.vehicleID }}</td>
+                <td>{{ vehicle.vehicleType }}</td>
+                <td>{{ vehicle.capacity }}</td>
+                <td>{{ vehicle.numberPlate }}</td>
+                <td>{{ vehicle.status }}</td>
+                <td>
+                    <button class="edit-btn" (click)="editVehicle(vehicle)">Edit</button>
+                    <button *ngIf="vehicle.vehicleID !== undefined" class="delete-btn"
+                        (click)="deleteVehicle(vehicle.vehicleID)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,129 @@
+<div class="container">
+    <h2>Driver Management</h2>
+
+    <!-- Add Driver Button -->
+    <button class="add-btn" (click)="toggleAddForm()">
+        {{ showAddForm ? 'Close Form' : '➕ Add Driver' }}
+    </button>
+
+    <!-- Popup Overlay for Add/Edit Driver -->
+    <div *ngIf="showAddForm || editingDriver" class="driver-popup-overlay">
+        <div class="driver-popup">
+            <!-- Close Button -->
+            <button class="close-btn" (click)="showAddForm ? toggleAddForm() : cancelEdit()">&times;</button>
+
+            <!-- Add Driver Form -->
+            <form *ngIf="showAddForm" #driverForm="ngForm" (ngSubmit)="addDriver(driverForm)" class="driver-form">
+                <h3>Add New Driver</h3>
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" [(ngModel)]="newDriver.driverName" name="driverName" #name="ngModel" required />
+                    <div class="error" *ngIf="name.invalid && name.touched">Please enter the driver's name.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>License Number:</label>
+                    <input type="text" [(ngModel)]="newDriver.licenseNumber" name="licenseNumber" #license="ngModel" required />
+                    <div class="error" *ngIf="license.invalid && license.touched">Please enter the license number.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number:</label>
+                    <input type="text" [(ngModel)]="newDriver.phoneNumber" name="phoneNumber" #phone="ngModel" required />
+                    <div class="error" *ngIf="phone.invalid && phone.touched">Please enter the phone number.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Experience (Years):</label>
+                    <input type="number" [(ngModel)]="newDriver.experienceYear" name="experienceYear" #exp="ngModel" required />
+                    <div class="error" *ngIf="exp.invalid && exp.touched">Please enter the experience in years.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select [(ngModel)]="newDriver.status" name="status" required>
+                        <option [value]="'Inuse'">Inuse</option>
+                        <option [value]="'Available'">Available</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit">Save</button>
+                    <button type="button" class="cancel-btn" (click)="toggleAddForm()">Cancel</button>
+                </div>
+            </form>
+
+            <!-- Edit Driver Form -->
+            <form *ngIf="editingDriver" #editForm="ngForm" (ngSubmit)="updateDriver(editForm)" class="driver-form">
+                <h3>Edit Driver</h3>
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" [(ngModel)]="editingDriver.driverName" name="editDriverName" #editName="ngModel" required />
+                    <div class="error" *ngIf="editName.invalid && editName.touched">Please enter the driver's name.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>License Number:</label>
+                    <input type="text" [(ngModel)]="editingDriver.licenseNumber" name="editLicenseNumber" #editLicense="ngModel" required />
+                    <div class="error" *ngIf="editLicense.invalid && editLicense.touched">Please enter the license number.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number:</label>
+                    <input type="text" [(ngModel)]="editingDriver.phoneNumber" name="editPhoneNumber" #editPhone="ngModel" required />
+                    <div class="error" *ngIf="editPhone.invalid && editPhone.touched">Please enter the phone number.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Experience (Years):</label>
+                    <input type="number" [(ngModel)]="editingDriver.experienceYear" name="editExperienceYear" #editExp="ngModel" required />
+                    <div class="error" *ngIf="editExp.invalid && editExp.touched">Please enter the experience in years.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select [(ngModel)]="editingDriver.status" name="editStatus" #editStatus="ngModel" required>
+                        <option [value]="'Inuse'">Inuse</option>
+                        <option [value]="'Available'">Available</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit">Update</button>
+                    <button type="button" class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Driver Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>License Number</th>
+                <th>Phone Number</th>
+                <th>Experience</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let driver of drivers">
+                <td>{{ driver.driverID }}</td>
+                <td>{{ driver.driverName }}</td>
+                <td>{{ driver.licenseNumber }}</td>
+                <td>{{ driver.phoneNumber }}</td>
+                <td>{{ driver.experienceYear }}</td>
+                <td>{{ driver.status }}</td>
+                <td>
+                    <button class="edit-btn" (click)="editDriver(driver)">Edit</button>
+                    <button *ngIf="driver.driverID !== undefined" class="delete-btn" (click)="deleteDriver(driver.driverID)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p *ngIf="drivers.length === 0">No drivers found in the database.</p>
+</div>

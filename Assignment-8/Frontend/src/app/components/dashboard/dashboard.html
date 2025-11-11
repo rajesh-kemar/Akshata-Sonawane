@@ -1,0 +1,36 @@
+<div class="dashboard-container">
+  <div class="cards">
+    <!-- Active Trips -->
+    <div class="card active" (click)="navigateToTrips('active')">
+      <h3>Active Trips</h3>
+      <p>{{ activeTripsCount }}</p>
+    </div>
+
+    <!-- Completed Trips -->
+    <div class="card completed" (click)="navigateToTrips('completed')">
+      <h3>Completed Trips</h3>
+      <p>{{ completedTripsCount }}</p>
+    </div>
+
+    <!-- Total Hours (Driver only) -->
+    <div class="card total-hours" *ngIf="isDriver" (click)="navigateToTripSummary()">
+  <h3>Total Hours</h3>
+  <p>{{ totalHours | number:'1.0-2' }}</p>
+</div>
+
+
+    <!-- Available Drivers (Dispatcher only) -->
+    <div class="card drivers" *ngIf="!isDriver" (click)="navigateTo('driver')">
+      <h3>Available Drivers</h3>
+      <p>{{ availableDriversCount }}</p>
+    </div>
+
+    <!-- Available Vehicles (Dispatcher only) -->
+    <div class="card vehicles" *ngIf="!isDriver" (click)="navigateTo('vehicle')">
+      <h3>Available Vehicles</h3>
+      <p>{{ availableVehiclesCount }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+</div>
