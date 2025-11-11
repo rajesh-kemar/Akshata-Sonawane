@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="vehicle-list">
+    <h2>Vehicle List</h2>
+    <button (click)="toggleFilter()">
+      {{ showAvailableOnly ? 'Show All' : 'Show Only Available' }}
+    </button>
+
+    <ul>
+      <li *ngFor="let vehicle of filteredVehicles" (click)="selectVehicle(vehicle)" class="vehicle-item">
+        {{ vehicle.numberPlate }} - {{ vehicle.type }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Side panel for vehicle details -->
+  <div class="side-panel" [class.open]="selectedVehicle">
+    <app-vehicle-details [vehicle]="selectedVehicle"></app-vehicle-details>
+  </div>
+  <div
+    class="backdrop"
+    [class.show]="selectedVehicle"
+    (click)="selectVehicle(null)"
+  ></div>
+</div>
+
+
