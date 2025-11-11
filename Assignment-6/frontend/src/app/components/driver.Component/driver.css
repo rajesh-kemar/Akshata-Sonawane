@@ -1,0 +1,205 @@
+/* Container styling */
+.container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Headings */
+h2, h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: #1976d2;
+  color: white;
+  font-weight: 600;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e0f0ff;
+}
+
+/* No drivers message */
+p {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* Table buttons */
+.edit-btn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.edit-btn:hover {
+  background-color: #fb8c00;
+}
+
+.delete-btn {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Add Driver button */
+.add-btn {
+  display: block;
+  margin: 10px auto 20px auto;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-btn:hover {
+  background-color: #125ca1;
+}
+
+/* Side-by-side forms container */
+.forms-container {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Individual form styling */
+.driver-form,
+.edit-form {
+  flex: 1; /* each form takes half */
+  background: #ffffff;
+  padding: 20px 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+/* Form headings */
+.driver-form h3,
+.edit-form h3 {
+  text-align: center;
+  color: #1976d2;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Form fields */
+.driver-form div,
+.edit-form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.driver-form label,
+.edit-form label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.driver-form input,
+.edit-form input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.driver-form input:focus,
+.edit-form input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 5px rgba(25, 118, 210, 0.3);
+  outline: none;
+}
+
+/* Form buttons */
+.form-actions button {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Save button */
+.driver-form .form-actions button[type="submit"],
+.edit-form button[type="submit"] {
+  background-color: #1976d2;
+  color: white;
+}
+
+.driver-form .form-actions button[type="submit"]:hover,
+.edit-form button[type="submit"]:hover {
+  background-color: #125ca1;
+}
+
+/* Cancel button */
+.driver-form .form-actions button[type="button"],
+.edit-form button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.driver-form .form-actions button[type="button"]:hover,
+.edit-form button[type="button"]:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .forms-container {
+    flex-direction: column;
+  }
+
+  .driver-form,
+  .edit-form {
+    width: 100%;
+  }
+}

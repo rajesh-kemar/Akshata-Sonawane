@@ -1,0 +1,50 @@
+/* Full-width header + navbar container */
+header {
+  width: 100%;
+  background-color: #1976d2; /* header & navbar background */
+  padding: 15px 20px;
+  box-sizing: border-box;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Heading aligned left */
+header h1 {
+  margin: 0;
+  text-align: left;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* Navigation bar */
+nav {
+  display: flex;
+  justify-content: center; /* centers nav links horizontally */
+  gap: 30px; /* space between links */
+}
+
+/* Navigation links */
+nav a {
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  background-color: #1976d2; /* same as header background */
+  color: white;
+  font-weight: bold;
+  font-size: 25px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  
+}
+
+nav a:hover {
+  background-color: #125ca1; /* hover effect */
+  transform: scale(1.05);
+}
+
+nav a.active-link {
+  background-color: #ff9800; /* active link highlight */
+  color: white;
+}

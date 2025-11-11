@@ -1,0 +1,6 @@
+@EF_Core_TripMangement_HostAddress = http://localhost:5053
+
+GET {{EF_Core_TripMangement_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
